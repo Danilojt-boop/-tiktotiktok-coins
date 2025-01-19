@@ -1,4 +1,4 @@
-function watchVideo() {
+defunction watchVideo() {
     document.getElementById('status').innerText = "Você ganhou 10 moedas!";
 }
 const Video = mongoose.model('Video', { // Define o modelo para vídeos
@@ -110,3 +110,28 @@ app.post('/getCoins', async (req, res) => {
         res.status(404).send({ error: 'Usuário não encontrado' }); // Retorna um erro se o usuário não for encontrado
     }
 });
+let userId = null; // Variável para armazenar o ID do usuário
+
+async function registerUser() {
+    const username = document.getElementById('username').value;
+
+    // Verifica se o campo de nome de usuário está vazio
+    if (!username) {
+        document.getElementById('registrationStatus').innerText = 'Por favor, digite um nome de usuário.';
+        return;
+    }
+
+    const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    });
+
+    const data = await response.json();
+    if (data._id) {
+        userId = data._id; // Armazenar o ID do usuário registrado
+        document.getElementById('registrationStatus').innerText = 'Registro realizado com sucesso! Bem-vindo, ' + username + '!';
+    } else {
+        document.getElementById('registrationStatus').innerText = 'Erro ao registrar usuário. Tente novamente.';
+    }
+}
