@@ -37,3 +37,16 @@
 <div>
     <h2>Seu saldo de moedas: <span id="coins">0</span></h2>
 </div>
+<script>
+    async function addVideo() {
+        const videoLink = document.getElementById('videoLink').value; // Pega o link do vídeo do campo de entrada
+        const response = await fetch('http://localhost:3000/addVideo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: 'seu-id-de-teste', videoLink }) // Envia o ID do usuário e o link do vídeo
+        });
+
+        const data = await response.json(); // Espera a resposta do servidor
+        alert(data.message || 'Erro ao adicionar vídeo'); // Mostra uma mensagem ao usuário
+    }
+</script>
