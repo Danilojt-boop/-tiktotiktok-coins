@@ -16,3 +16,21 @@
     <script src="script.js"></script>
 </body>
 </html>
+<div>
+    <h2>Seu saldo de moedas: <span id="coins">0</span></h2>
+</div>
+
+<script>
+    async function fetchCoins() {
+        const response = await fetch('http://localhost:3000/getCoins', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: 'seu-id-de-teste' }) // Substitua com o ID real
+        });
+
+        const data = await response.json();
+        document.getElementById('coins').innerText = data.coins || 0;
+    }
+
+    fetchCoins();
+</script>
