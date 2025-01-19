@@ -135,3 +135,48 @@ async function registerUser() {
         document.getElementById('registrationStatus').innerText = 'Erro ao registrar usuário. Tente novamente.';
     }
 }
+let userId = null; // Variável para armazenar o ID do usuário
+
+async function registerUser() {
+    const username = document.getElementById('username').value;
+    const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    });
+
+    const data = await response.json();
+    if (data._id) {
+        userId = data._id; // Armazenar o ID do usuário registrado
+        document.getElementById('registrationStatus').innerText = 'Usuário registrado com sucesso!';
+    } else {
+        document.getElementById('registrationStatus').innerText = 'Erro ao registrar usuário.';
+    }
+}
+
+async function addVideo() {
+    const videoLink = document.getElementById('videoLink').value;
+    if (!userId) {
+        alert('Por favor, registre-se primeiro!');
+        return;
+    }
+
+    // Adicionar o vídeo à lista de vídeos
+    const videoList = document.getElementById('videoList');
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#" onclick="playVideo('${videoLink}')">${videoLink}</a>`;
+    videoList.appendChild(li);
+
+    // Aqui você deve também adicionar o vídeo ao backend, se necessário
+    // (No backend, você pode adicionar uma rota para persistir vídeos, se ainda não fez isso)
+
+    document.getElementById('videoLink').value = ''; // Limpar o campo
+}
+
+function playVideo(videoLink) {
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoIframe = document.getElementById('videoIframe');
+    
+    videoIframe.src = videoLink; // Define a URL do vídeo no iframe
+    videoPlayer.style.display = 'block'; // Mostra o player de vídeo
+        }
