@@ -51,3 +51,46 @@
     }
 </script>
 <link rel="stylesheet" href="style.css">
+<div>
+    <h2>Registro de Usuário</h2>
+    <input type="text" id="username" placeholder="Digite seu nome de usuário">
+    <button onclick="registerUser()">Registrar</button>
+</div>
+<p id="registrationStatus"></p>
+let userId = null; // Variável para armazenar o ID do usuário
+
+async function registerUser() {
+    const username = document.getElementById('username').value;
+    const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    });
+
+    const data = await response.json();
+    if (data._id) {
+        userId = data._id; // Armazenar o ID do usuário registrado
+        document.getElementById('registrationStatus').innerText = 'Usuário registrado com sucesso!';
+    } else {
+        document.getElementById('registrationStatus').innerText = 'Erro ao registrar usuário.';
+    }
+}
+async function watchVideo() {
+    if (!userId) {
+        alert('Por favor, registre-se primeiro!');
+        return;
+    }
+    const response = await fetch('http://localhost:3000/watch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId })
+    });
+
+    const data = await response.json();
+    document.getElementById('status').innerText = data.message || 'Erro!';
+}
+<div>
+    <h3>Adicionar um vídeo</h3>
+    <input type="text" id="videoLink" placeholder="Cole o link do seu vídeo">
+    <button onclick="addVideo()">Adicionar Vídeo</button>
+</div>
