@@ -94,3 +94,43 @@ async function watchVideo() {
     <input type="text" id="videoLink" placeholder="Cole o link do seu vídeo">
     <button onclick="addVideo()">Adicionar Vídeo</button>
 </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Coins</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Bem-vindo ao TikTok Coins</h1>
+
+    <div>
+        <h2>Registro de Usuário</h2>
+        <input type="text" id="username" placeholder="Digite seu nome de usuário">
+        <button onclick="registerUser()">Registrar</button>
+    </div>
+    <p id="registrationStatus"></p>
+
+    <div>
+        <h3>Adicionar um vídeo</h3>
+        <input type="text" id="videoLink" placeholder="Cole o link do seu vídeo">
+        <button onclick="addVideo()">Adicionar Vídeo</button>
+    </div>
+
+    <h3>Vídeos disponíveis:</h3>
+    <ul id="videoList"></ul>
+
+    <div id="videoPlayer" style="display:none;">
+        <h3>Assistindo:</h3>
+        <iframe id="videoIframe" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div id="app">
+        <button onclick="watchVideo()">Assistir Vídeo</button>
+        <p id="status"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
