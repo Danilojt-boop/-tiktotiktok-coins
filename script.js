@@ -1,4 +1,4 @@
-defunction watchVideo() {
+jodefunction watchVideo() {
     document.getElementById('status').innerText = "Você ganhou 10 moedas!";
 }
 const Video = mongoose.model('Video', { // Define o modelo para vídeos
@@ -180,3 +180,27 @@ function playVideo(videoLink) {
     videoIframe.src = videoLink; // Define a URL do vídeo no iframe
     videoPlayer.style.display = 'block'; // Mostra o player de vídeo
         }
+const Video = mongoose.model('Video', {
+    userId: String,
+    videoLink: String,
+    views: { type: Number, default: 0 },
+});
+
+// (Mantenha as rotas já existentes)
+
+app.post('/addVideo', async (req, res) => {
+    const { userId, videoLink } = req.body;
+    const user = await User.findById(userId);
+
+    if (user && user.coins >= 10) { // Cobrar 10 moedas por vídeo
+        user.coins -= 10;
+        await user.save();
+
+        const video = new Video({ userId, videoLink });
+        await video.save();
+
+        res.send({ message: 'Vídeo adicionado com sucesso!' });
+    } else {
+        res.status(400).send({ error: 'Moedas insuficientes ou usuário inválido' });
+    }
+});
