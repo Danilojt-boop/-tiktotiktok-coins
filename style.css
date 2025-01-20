@@ -1,1 +1,34 @@
 
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+#coinBalance {
+    margin-bottom: 20px;
+}
+
+input {
+    margin: 5px 0;
+    padding: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#videoPlayer {
+    margin-top: 20px;
+}
