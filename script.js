@@ -78,3 +78,71 @@ function updateCoinsDisplay() {
     document.getElementById('coins').innerText = currentCoins;
 }
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const app = express();
+app.use(bodyParser.json());
+
+// Conexão com o banco de dados (exemplo usando MongoDB)
+mongoose.connect('mongodb://localhost:27017/tiktok-coins', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// Modelo de usuário
+const User = mongoose.model('User', {
+    username: String,
+    coins: { type: Number, default: 0 },
+});
+
+// Modelo de vídeo
+const Video = mongoose.model('Video', {
+    userId: String,
+    videoLink: String,
+});
+
+// Rota para registrar um usuário
+app.post('/register', async (req, res) => {
+    const { username } = req.body;
+    const user = new User({ username, coins: 0 }); // Inicializa com 0 moedas
+    await user.save();
+    res.status(201).send(user);
+});
+
+// Rota para adicionar vídeo
+app.post('/addVideo', async (req, res) => {
+    const { userId, videoLink } = req.body;
+    const user = await User.findById(userId);
+
+    if (user && user.coins >= 50) { // Cobrar 50 moedas por vídeo
+        user.coins -= 50;
+        await user.save();
+
+        const video = new Video({ userId, videoLink });
+        await video.save();
+
+        res.send({ message: 'Vídeo adicionado com sucesso!' });
+    } else {
+        res.status(400).send({ error: 'Moedas insuficientes ou usuário inválido' });
+    }
+});
+
+// Rota para assistir vídeos (adiciona moedas)
+app.post('/watch', async (req, res) => {
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+    if (user) {
+        user.coins += 10; // Exemplo: 10 moedas por vídeo
+        await user.save();
+        res.send({ message: 'Moedas adicionadas!', coins: user.coins });
+    } else {
+        res.status(404).send({ error: 'Usuário não encontrado' });
+    }
+});
+
+// Inicialização do servidor
+app.listen(3000, () => {
+    console.log('Servidor rodando em http://localhost:3000');
+});
