@@ -1,41 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Coins</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Sistema TikTok</title>
 </head>
 <body>
-    <h1>Bem-vindo ao TikTok Coins</h1>
+  <header>
+    <div class="balance" id="balance">Saldo: 50 moedas</div>
+    <div class="user-info" id="user-info">Bem-vindo, Usuário!</div>
+  </header>
+  
+  <main>
+    <section class="registration">
+      <h2>Registro de Usuário</h2>
+      <form id="register-form">
+        <input type="text" id="username" placeholder="Nome de Usuário" required>
+        <input type="password" id="password" placeholder="Senha" required>
+        <button type="submit">Registrar</button>
+      </form>
+      <p id="register-message"></p>
+    </section>
 
-    <div id="coinBalance">
-        <h2>Seu saldo de moedas: <span id="coins">0</span></h2>
-    </div>
+    <section class="add-link">
+      <h2>Adicionar Link de Vídeo do TikTok</h2>
 
-    <div>
-        <h2>Registro de Usuário</h2>
-        <input type="text" id="username" placeholder="Digite seu nome de usuário">
-        <button onclick="registerUser()">Registrar</button>
-        <p id="registrationStatus"></p>
-    </div>
-
-    <div>
-        <h3>Adicionar um vídeo do TikTok</h3>
-        <input type="text" id="videoLink" placeholder="Cole o link do seu vídeo ou perfil">
-        <button onclick="addVideo()">Adicionar Vídeo (50 moedas)</button>
-        <p id="videoAddStatus"></p>
-    </div>
-
-    <h3>Vídeos disponíveis:</h3>
-    <ul id="videoList"></ul>
-
-    <div id="videoPlayer" style="display:none;">
-        <h3>Assistindo:</h3>
-        <iframe id="videoIframe" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
+        
